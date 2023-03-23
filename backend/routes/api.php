@@ -10,10 +10,18 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('/products', [ProductController::class, 'getAll']);
+Route::get('/product/{id}', [ProductController::class, 'getOne']);
 
 
 Route::group(['middleware' => ['auth:sanctum']], function()
 {
     Route::get('/user', fn(Request $request) => $request->user());
     Route::post('/logout', [AuthController::class, 'logout']);
+
+    Route::middleware('can:manage-products')->group(function()
+    {
+        Route::post('/product', [ProductController::class, 'create']);
+        Route::patch('/product/{id}', [ProductController::class, 'update']);
+        Route::delete('/product/{id}', [ProductController::class, 'delete']);
+    });
 });
