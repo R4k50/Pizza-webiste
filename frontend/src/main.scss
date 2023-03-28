@@ -1,7 +1,24 @@
+@use 'reusable' as *;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Oswald:wght@200;300;700&display=swap');
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  font-family: $font-main;
+  letter-spacing: 1px;
+}
+
+html {
+  font-size: 1.5em;
+}
+
+body {
+  background: $bg-main;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
 }
