@@ -1,18 +1,28 @@
 import './styles/Navbar.scss';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import useObserver from '../hooks/useObserver';
+
+import StaticNavbar from './StaticNavbar';
+import FloatingNavbar from './FloatingNavbar';
+
 
 const Navbar = () => {
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+  const { ref, isVisible } = useObserver({
+    root: null,
+    rootMargin: '50%',
+    threshold: 1
+  });
+
+  useEffect(() => {
+    setIsSmallScreen(window.screen.width < 1150)
+  }, [setIsSmallScreen]);
+
   return (
-    <header className="Navbar">
-      <nav>
-        <Link to="/">Home</Link>
-        <Link to="/menu">Menu</Link>
-        <Link to="/cart">Cart</Link>
-        <Link to="/orders">Orders</Link>
-        <Link to="/login">Login</Link>
-        <Link to="/signup">Signup</Link>
-      </nav>
-    </header>
+    <>
+      <FloatingNavbar visibility={(isSmallScreen || !isVisible)} />
+      {!isSmallScreen && <StaticNavbar ref={ref} />}
+    </>
   );
 }
 

@@ -13,7 +13,7 @@ $font-main: 'Oswald', sans-serif;
 $font-logo: 'Montserrat', sans-serif;
 
 @mixin desktop {
-  @media (min-width: 1130px) {
+  @media (min-width: 1150px) {
     @content;
   }
 }

@@ -1,0 +1,37 @@
+@use '../../reusable' as *;
+
+.ButtonAction {
+  min-width: 5.5rem;
+  height: 2rem;
+  background: $accent;
+  border: 3px solid $accent;
+  border-radius: 0.5rem;
+
+  & > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: .2rem;
+    color: $bg-main;
+    font-size: 1rem;
+    text-align: center;
+  }
+}
+
+.ButtonAction.Alt {
+  min-width: 5.5rem;
+  height: 2rem;
+  background: none;
+  border: 3px solid $accent;
+  border-radius: 0.5rem;
+
+  & > a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: .2rem;
+    color: $accent;
+    font-size: 1rem;
+    text-align: center;
+  }
+}
