@@ -1,5 +1,7 @@
+import './styles/FloatingMenu.scss';
 import { Icon } from '@iconify/react';
 import { animated, useTransition } from 'react-spring';
+import Socials from './Socials';
 
 const FloatingMenu = ({children, visibility}) => {
   const transitions = useTransition(visibility, {
@@ -13,22 +15,9 @@ const FloatingMenu = ({children, visibility}) => {
 
   return transitions((style, item) => (
     item && <animated.nav style={style}>
-      <div  className='FloatingMenu webnav'>
+      <div className='FloatingMenu webnav'>
         {children}
-        <div className='socials'>
-          <a href="." className='facebook'>
-            <Icon icon="ri:facebook-fill" />
-          </a>
-          <a href="." className='twitter'>
-            <Icon icon="ri:twitter-fill" />
-          </a>
-          <a href="." className='instagram'>
-            <Icon icon="ri:instagram-fill" />
-          </a>
-          <a href="." className='tiktok'>
-            <Icon icon="ic:baseline-tiktok" />
-          </a>
-        </div>
+        <Socials />
       </div>
     </animated.nav>
   ))
