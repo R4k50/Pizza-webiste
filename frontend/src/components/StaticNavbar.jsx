@@ -34,7 +34,7 @@ const StaticNavbar = forwardRef((props, ref) => {
       <Link to="/orders" className='link'>orders</Link>
     </div>
     <div className="auth">
-      <ButtonAction to="/signup" type='alt' onClick={() => setIsMenuVisible(() => false)}>sign up</ButtonAction>
+      <ButtonAction to="/signup" appearance='alt' onClick={() => setIsMenuVisible(() => false)}>sign up</ButtonAction>
       <ButtonAction to="/login" onClick={() => setIsMenuVisible(() => false)}>log in</ButtonAction>
     </div>
   </>
@@ -46,9 +46,7 @@ const StaticNavbar = forwardRef((props, ref) => {
           <Link to="/" className='logo'><span>P</span>IZZA</Link>
           <Links/>
         </nav>
-        <AnimatedButton onClick={handleClick} ref={btnRef} className='menu'>
-          <Hamburger menuVisibility={isMenuVisible} />
-        </AnimatedButton>
+        <Hamburger onClick={handleClick} ref={btnRef} menuVisibility={isMenuVisible} className='menu'/>
       </header>
       <FloatingMenu visibility={isMenuVisible}>
         <Links />

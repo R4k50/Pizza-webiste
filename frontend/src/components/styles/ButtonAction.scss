@@ -2,36 +2,46 @@
 
 .ButtonAction {
   min-width: 5.5rem;
-  height: 2rem;
   background: $accent;
   border: 3px solid $accent;
-  border-radius: 0.5rem;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  color: $bg-main;
+  font-size: .8rem;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
-  & > a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-bottom: .2rem;
-    color: $bg-main;
-    font-size: 1rem;
-    text-align: center;
+  @include desktop {
+    min-width: 4.5rem;
+    border: 2px solid $accent;
+    font-weight: 300;
   }
-}
 
-.ButtonAction.Alt {
-  min-width: 5.5rem;
-  height: 2rem;
-  background: none;
-  border: 3px solid $accent;
-  border-radius: 0.5rem;
 
-  & > a {
+  & > .content {
     display: flex;
     align-items: center;
     justify-content: center;
     padding-bottom: .2rem;
-    color: $accent;
-    font-size: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    color: $bg-main;
     text-align: center;
+
+
+    @include desktop {
+      padding-bottom: .2rem;
+      padding-left: .75rem;
+      padding-right: .75rem;
+    }
+  }
+
+  &.Alt {
+    background: none;
+
+    & > a {
+      color: $accent;
+    }
   }
 }

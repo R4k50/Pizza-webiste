@@ -20,8 +20,8 @@ const Navbar = () => {
 
   return (
     <>
-      <FloatingNavbar visibility={(isSmallScreen || !isVisible)} />
       {!isSmallScreen && <StaticNavbar ref={ref} />}
+      <FloatingNavbar visibility={(isSmallScreen || !isVisible)} />
     </>
   );
 }

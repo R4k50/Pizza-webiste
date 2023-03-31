@@ -8,7 +8,7 @@ const AnimatedButton = forwardRef((props, ref) => {
   const animation = useSpring({
     from: { scale: 1 },
     to: { scale: open ? 1.1 : 1 },
-    onResolve: () => { toggle(false) },
+    onResolve: () => { toggle(() => false) },
     config: {
       duration: 150
     }
@@ -26,7 +26,12 @@ const AnimatedButton = forwardRef((props, ref) => {
   }
 
   return (
-    <animated.button {...props} ref={ref} style={animation} onClick={handleClick}>
+    <animated.button
+      {...props}
+      ref={ref}
+      style={{...props?.style, ...animation}}
+      onClick={handleClick}
+    >
       {props.children}
     </animated.button>
   );
