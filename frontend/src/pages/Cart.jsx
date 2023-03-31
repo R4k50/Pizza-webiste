@@ -2,7 +2,7 @@ import './styles/Cart.scss';
 
 const Cart = () => {
   return (
-    <div className="Login">Cart</div>
+    <div className="Cart">Cart</div>
   );
 }
 
