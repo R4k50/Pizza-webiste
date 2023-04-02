@@ -1,18 +1,26 @@
 import './styles/StaticNavbar.scss';
 import { useRef, useState, useEffect, forwardRef } from 'react';
 import { Link } from 'react-router-dom';
-import AnimatedButton from './wrappers/AnimatedButton';
 import Hamburger from './Hamburger';
 import FloatingMenu from './FloatingMenu';
 import ButtonAction from './ButtonAction';
+import useAuthContext from '../hooks/useAuthContext';
+import useLogout from '../hooks/useLogout';
 
 
 const StaticNavbar = forwardRef((props, ref) => {
+  const { userData } = useAuthContext();
+  const { logout, isLoading } = useLogout();
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   const btnRef = useRef(null);
 
   const handleClick = () => {
     setIsMenuVisible(prev => !prev);
+  }
+
+  const handleLogout = () => {
+    if (userData)
+      logout(userData.token);
   }
 
   useEffect(() => {
@@ -30,12 +38,19 @@ const StaticNavbar = forwardRef((props, ref) => {
     <div className="pages">
       <Link to="/" className='link'>home</Link>
       <Link to="/menu" className='link'>menu</Link>
-      <Link to="/cart" className='link'>cart</Link>
-      <Link to="/orders" className='link'>orders</Link>
+      {userData && <Link to="/cart" className='link'>cart</Link> }
+      {userData && <Link to="/orders" className='link'>orders</Link> }
     </div>
     <div className="auth">
-      <ButtonAction to="/signup" appearance='alt' onClick={() => setIsMenuVisible(() => false)}>sign up</ButtonAction>
-      <ButtonAction to="/login" onClick={() => setIsMenuVisible(() => false)}>log in</ButtonAction>
+      {!userData && <ButtonAction
+        to="/register"
+        appearance='alt'
+        onClick={() => setIsMenuVisible(() => false)}
+      >sign up</ButtonAction>}
+      {userData
+        ? <ButtonAction onClick={handleLogout} disabled={isLoading}>log out</ButtonAction>
+        : <ButtonAction to="/login" onClick={() => setIsMenuVisible(() => false)}>log in</ButtonAction>
+      }
     </div>
   </>
 
@@ -46,7 +61,12 @@ const StaticNavbar = forwardRef((props, ref) => {
           <Link to="/" className='logo'><span>P</span>IZZA</Link>
           <Links/>
         </nav>
-        <Hamburger onClick={handleClick} ref={btnRef} menuVisibility={isMenuVisible} className='menu'/>
+        <Hamburger
+          onClick={handleClick}
+          ref={btnRef}
+          menuVisibility={isMenuVisible}
+          className='menu'
+        />
       </header>
       <FloatingMenu visibility={isMenuVisible}>
         <Links />

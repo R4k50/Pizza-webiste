@@ -6,8 +6,11 @@ import pizza1 from '../images/Pizza1.png';
 import pizza2 from '../images/Pizza2.png';
 import pizza3 from '../images/Pizza3.png';
 import pizza4 from '../images/Pizza4.png';
+import useAuthContext from '../hooks/useAuthContext';
 
 const Home = () => {
+  const { userData } = useAuthContext();
+
   const serviceProcessItems = [
     {
       icon: "material-symbols:app-shortcut-rounded",
@@ -37,21 +40,23 @@ const Home = () => {
           <Icon icon="ph:arrow-arc-left-light" />
           <div className="actions">
             <ButtonAction to='/menu'>place an order<Icon icon="material-symbols:arrow-forward-ios-rounded" /></ButtonAction>
-            <ButtonAction to='/orders' appearance='alt'>track your order<Icon icon="ph:magnifying-glass-bold" /></ButtonAction>
+            <ButtonAction to={userData ? '/orders' : '/login'} appearance='alt'>track your order<Icon icon="ph:magnifying-glass-bold" /></ButtonAction>
           </div>
           <img src={pizza1} className='pizza' alt="pizza" />
           <img src={pizza2} className='pizza secondary' alt="pizza" />
           <Socials />
         </section>
         <section className="service">
-          <h2>SERVICE PROCESS</h2>
           <div className="container">
-            {serviceProcessItems.map(({icon, title}, key) => (
-              <div key={key}>
-                <Icon className="icon" icon={icon} />
-                <p>{title}</p>
-              </div>
-            ))}
+            <h2>SERVICE PROCESS</h2>
+            <div className="process">
+              {serviceProcessItems.map(({icon, title}, key) => (
+                <div key={key}>
+                  <Icon className="icon" icon={icon} />
+                  <p>{title}</p>
+                </div>
+              ))}
+            </div>
           </div>
           <div className="arrows">
             <Icon icon="ph:arrow-arc-left-light" />

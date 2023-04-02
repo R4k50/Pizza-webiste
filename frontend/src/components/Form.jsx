@@ -1,5 +1,6 @@
 import './styles/Form.scss';
 import { forwardRef } from 'react';
+import { useTrail, animated } from 'react-spring';
 import ButtonAction from './ButtonAction';
 import pizza2 from '../images/Pizza2.png';
 import pizza3 from '../images/Pizza3.png';
@@ -12,7 +13,9 @@ const Form = forwardRef((props, ref) => {
     title,
     accept,
     deny,
-    denyRedirect
+    denyRedirect,
+    errors,
+    isLoading
   } = props;
 
   return (
@@ -23,9 +26,14 @@ const Form = forwardRef((props, ref) => {
           {children}
         </div>
         <div className="actions">
+          <ButtonAction type='submit' disabled={isLoading}>{accept || "accept"}</ButtonAction>
           <ButtonAction to={denyRedirect || '/'} appearance='alt'>{deny || "deny"}</ButtonAction>
-          <ButtonAction type='submit'>{accept || "accept"}</ButtonAction>
         </div>
+        {errors && <ol className="errors">{
+          errors.map((error, key) => (
+            <animated.li className="error" key={key}>{error}</animated.li>
+          ))
+        }</ol>}
       </form>
       <img className='pizza' src={pizza2} alt="pizza" />
       <img className='pizza' src={pizza3} alt="pizza" />

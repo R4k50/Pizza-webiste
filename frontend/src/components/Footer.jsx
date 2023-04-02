@@ -2,8 +2,11 @@ import './styles/Footer.scss';
 import { Link } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import Socials from './Socials';
+import useAuthContext from '../hooks/useAuthContext';
 
 const Footer = () => {
+  const { userData } = useAuthContext();
+
   return (
     <footer>
       <div className="main">
@@ -15,10 +18,13 @@ const Footer = () => {
         <nav>
           <Link to='/'>home</Link>
           <Link to='/menu'>menu</Link>
-          <Link to='/cart'>cart</Link>
-          <Link to='/orders'>orders</Link>
-          <Link to='/signup'>sign up</Link>
-          <Link to='/login'>log in</Link>
+          {userData ? <>
+            <Link to='/cart'>cart</Link>
+            <Link to='/orders'>orders</Link>
+          </> : <>
+            <Link to='/register'>sign up</Link>
+            <Link to='/login'>log in</Link>
+          </>}
         </nav>
       </div>
       <div className="contact">

@@ -1,11 +1,16 @@
 import './styles/Login.scss';
 import Form from '../components/Form';
 import Input from '../components/Input';
+import useLogin from '../hooks/useLogin';
+import useForm from '../hooks/useForm';
 
 const Login = () => {
-  const handleSubmit = e => {
+  const { data: credentials, handleChange } = useForm();
+  const { login, errors, isLoading } = useLogin();
+
+  const handleSubmit = async e => {
     e.preventDefault();
-    console.log('cock');
+    await login(credentials);
   }
 
   return (
@@ -17,9 +22,20 @@ const Login = () => {
         deny='sign up'
         denyRedirect="/signup"
         onSubmit={handleSubmit}
+        errors={errors}
+        isLoading={isLoading}
       >
-        <Input label='e-mail' type='email' required/>
-        <Input label='password' type='password' required/>
+        <Input
+          onChange={handleChange}
+          label='e-mail'
+          name='email'
+        />
+        <Input
+          onChange={handleChange}
+          label='password'
+          type='password'
+          name='password'
+        />
       </Form>
     </div>
   );

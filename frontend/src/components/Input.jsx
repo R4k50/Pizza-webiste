@@ -3,7 +3,13 @@ import { forwardRef, useEffect, useId, useRef, useState } from 'react';
 import { animated, useSpring } from 'react-spring';
 
 const Input = forwardRef((props, ref) => {
-  const { label, onFocus, onBlur, onInput, } = props;
+  const {
+    label,
+    onFocus,
+    onBlur,
+    onInput,
+    errors
+  } = props;
 
   const id = useId();
   const inputRef = useRef();
@@ -49,8 +55,7 @@ const Input = forwardRef((props, ref) => {
       scale: 1
     },
     to: {
-      cursor: isFocused ? 'default' : 'text',
-      color: isFocused ? '#FE7223' : '#b3b3b3',
+      color: isFocused ? (errors ? '#FF7171' : '#FE7223') : '#b3b3b3',
       y: isFocused ? "-0.9rem" : "0rem",
       x: isFocused ? "0.25rem" : "0rem",
       scale: isFocused ? .75 : 1
@@ -68,7 +73,6 @@ const Input = forwardRef((props, ref) => {
       translateY: "-100%",
     },
     to: {
-      cursor: isFocused ? 'default' : 'text',
       scaleX: isFocused ? .75 : 0
     },
     config: { duration: 50 }
@@ -76,7 +80,7 @@ const Input = forwardRef((props, ref) => {
 
   const outlineAnimation = useSpring({
     from: { outlineColor: '#b3b3b3' },
-    to: { outlineColor: isFocused ? '#FE7223' : '#b3b3b3' },
+    to: { outlineColor: isFocused ? (errors ? '#FF7171' : '#FE7223') : '#b3b3b3' },
     config: {
       duration: 150
     }

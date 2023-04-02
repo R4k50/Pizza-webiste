@@ -1,17 +1,20 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import useAuthContext from './hooks/useAuthContext';
 import ScrollToTop from "./components/ScrollToTop";
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Signup from './pages/Signup';
+import Register from './pages/Register';
 import Menu from './pages/Menu';
 import Cart from './pages/Cart';
 import Orders from './pages/Orders';
 
 
 const View = () => {
+  const { userData } = useAuthContext();
+
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -24,11 +27,11 @@ const View = () => {
           />
           <Route
             path="/login"
-            element={<Login />}
+            element={ userData ? <Navigate to='/' /> : <Login /> }
           />
           <Route
-            path="/signup"
-            element={<Signup />}
+            path="/register"
+            element={ userData ? <Navigate to='/' /> : <Register /> }
           />
           <Route
             path="/menu"
@@ -36,11 +39,11 @@ const View = () => {
           />
           <Route
             path="/cart"
-            element={<Cart />}
+            element={ !userData ? <Navigate to='/login' /> : <Cart /> }
           />
           <Route
             path="/orders"
-            element={<Orders />}
+            element={ !userData ? <Navigate to='/login' /> : <Orders /> }
           />
         </Routes>
       </main>
