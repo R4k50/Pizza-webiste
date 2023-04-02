@@ -3,7 +3,8 @@
 .ButtonAction {
   min-width: 5.5rem;
   background: $accent;
-  border: 3px solid $accent;
+  border: none;
+  outline: 3px solid $accent;
   border-radius: 0.25rem;
   cursor: pointer;
   color: $bg-main;
@@ -14,7 +15,7 @@
 
   @include desktop {
     min-width: 4.5rem;
-    border: 2px solid $accent;
+    outline: 2px solid $accent;
     font-weight: 300;
   }
 

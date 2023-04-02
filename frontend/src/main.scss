@@ -49,6 +49,13 @@ p {
   letter-spacing: 1px;
 }
 
+img {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
 .iconify {
 
   &--ph {

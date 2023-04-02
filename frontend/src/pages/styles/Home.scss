@@ -107,7 +107,14 @@
       left: -10%;
       filter: drop-shadow(0px 14px 23px rgba(73, 73, 73, 0.25));
 
+      @media (max-height: 700px) {
+        transform: scale(.8);
+        bottom: -20%;
+        left: -12%;
+      }
+
       @include desktop {
+        width: 20%;
         bottom: 11rem;
         left: auto;
         right: 10rem;
@@ -122,19 +129,26 @@
 
       }
 
-      @media (max-height: 699px) {
-        width: 12rem;
-      }
-
       &.secondary {
         width: 12rem;
         bottom: -10%;
         left: 45%;
 
+        @media (max-height: 700px) {
+          bottom: -15%;
+        }
+
         @include desktop {
+          width: 17%;
           bottom: 10rem;
           left: auto;
           right: -1rem;
+
+          @media (max-aspect-ratio: '5/3') {
+            width: 25%;
+            bottom: 10rem;
+            left: auto;
+          }
         }
       }
     }
@@ -171,19 +185,24 @@
     overflow: visible;
 
     @include desktop {
-      padding: 4rem 6rem;
+      padding: 4rem 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     h2 {
       margin-bottom: 2.5rem;
 
       @include desktop {
+        text-align: left;
+        // margin-left: 8%;
         font-size: 2rem;
         margin-bottom: 5rem;
       }
     }
 
-    .container {
+    .process {
       display: flex;
       flex-direction: column;
       align-items: center;
