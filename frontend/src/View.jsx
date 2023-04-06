@@ -1,6 +1,7 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import useAuthContext from './hooks/useAuthContext';
+import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
 import ScrollToTop from "./components/ScrollToTop";
+import ProtectedRoute from './components/ProtectedRoute';
+import ProtectedUnverifiedRoute from './components/ProtectedUnverifiedRoute';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
@@ -13,8 +14,6 @@ import Orders from './pages/Orders';
 
 
 const View = () => {
-  const { userData } = useAuthContext();
-
   return (
     <BrowserRouter>
       <ScrollToTop />
@@ -27,11 +26,19 @@ const View = () => {
           />
           <Route
             path="/login"
-            element={ userData ? <Navigate to='/' /> : <Login /> }
+            element={
+              <ProtectedUnverifiedRoute>
+                <Login />
+              </ProtectedUnverifiedRoute>
+            }
           />
           <Route
             path="/register"
-            element={ userData ? <Navigate to='/' /> : <Register /> }
+            element={
+              <ProtectedUnverifiedRoute>
+                <Register />
+              </ProtectedUnverifiedRoute>
+            }
           />
           <Route
             path="/menu"
@@ -39,11 +46,19 @@ const View = () => {
           />
           <Route
             path="/cart"
-            element={ !userData ? <Navigate to='/login' /> : <Cart /> }
+            element={
+              <ProtectedRoute to='/login'>
+                <Cart />
+              </ProtectedRoute>
+            }
           />
           <Route
             path="/orders"
-            element={ !userData ? <Navigate to='/login' /> : <Orders /> }
+            element={
+              <ProtectedRoute to='/login'>
+                <Orders />
+              </ProtectedRoute>
+            }
           />
         </Routes>
       </main>
