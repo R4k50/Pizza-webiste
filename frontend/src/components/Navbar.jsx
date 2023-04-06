@@ -15,7 +15,7 @@ const Navbar = () => {
   });
 
   useEffect(() => {
-    setIsSmallScreen(window.screen.width < 1150)
+    setIsSmallScreen(window.screen.width < 1024)
   }, [setIsSmallScreen]);
 
   return (

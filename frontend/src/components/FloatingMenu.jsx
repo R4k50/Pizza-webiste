@@ -1,5 +1,4 @@
 import './styles/FloatingMenu.scss';
-import { Icon } from '@iconify/react';
 import { animated, useTransition } from 'react-spring';
 import Socials from './Socials';
 

@@ -86,6 +86,7 @@
 
     .ButtonAction.Alt {
       margin: 0;
+      background: none;
 
       @include desktop {
         margin-left: 1.5rem;
@@ -108,17 +109,16 @@
       filter: drop-shadow(0px 14px 23px rgba(73, 73, 73, 0.25));
 
       @media (max-height: 700px) {
-        transform: scale(.8);
+        width: 13rem;
         bottom: -20%;
         left: -12%;
       }
 
       @include desktop {
-        width: 20%;
-        bottom: 11rem;
+        width: 34%;
+        bottom: 5rem;
         left: auto;
-        right: 10rem;
-        transform: scale(1.7);
+        right: 6rem;
         filter: drop-shadow(-2px 3px 3px rgba(41, 41, 41, 0.25));
 
         @media (max-aspect-ratio: '5/3') {
@@ -135,18 +135,21 @@
         left: 45%;
 
         @media (max-height: 700px) {
-          bottom: -15%;
+          width: 12rem;
+          left: auto;
+          right: -2rem;
+          bottom: -20%;
         }
 
         @include desktop {
-          width: 17%;
-          bottom: 10rem;
+          width: 28%;
+          bottom: 5rem;
           left: auto;
-          right: -1rem;
+          right: -5rem;
 
           @media (max-aspect-ratio: '5/3') {
-            width: 25%;
-            bottom: 10rem;
+            width: 40%;
+            bottom: 6rem;
             left: auto;
           }
         }

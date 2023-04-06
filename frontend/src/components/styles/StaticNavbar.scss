@@ -37,6 +37,10 @@
       }
     }
 
+    .ButtonAction.Alt {
+      background: none;
+    }
+
     a:not(.logo), .ButtonAction, .ButtonAltAction {
       margin-left: 1.5rem;
     }

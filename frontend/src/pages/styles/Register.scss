@@ -1,7 +1,10 @@
 @use '../../reusable' as *;
 
 .Signup {
+  background: $bg-secondary;
+
   @include desktop {
+    background: none;
     min-height: $height-viewport;
     display: flex;
     align-items: center;
