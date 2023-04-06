@@ -26,6 +26,8 @@ class ProductController extends Controller
         $product = Product::create([
             'name' => $fields['name'],
             'ingredients' => $fields['ingredients'],
+            'price' => $fields['price'],
+            'img' => $fields['img'],
         ]);
 
         return response(compact('product'));
@@ -39,6 +41,8 @@ class ProductController extends Controller
         $product->update([
             'name' => $fields['name'],
             'ingredients' => $fields['ingredients'],
+            'price' => $fields['price'],
+            'img' => $fields['img'],
         ]);
 
         return response(compact('product'));

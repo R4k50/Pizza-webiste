@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('ingredients');
+            $table->float('price');
+            $table->string('img');
         });
     }
 
