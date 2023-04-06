@@ -1,27 +1,31 @@
 import { useState } from 'react';
 import useAuthContext from './useAuthContext';
+import useCartContext from './useCartContext';
 import axios from 'axios';
 
 export default function useLogout() {
   const [isLoading, setIsloading] = useState(false);
-  const { dispatch } = useAuthContext();
+  const { userData, dispatch: authDispatch } = useAuthContext();
+  const { dispatch: cartDispatch } = useCartContext();
 
-  const logout = async (token) => {
+  const logout = async () => {
     setIsloading(() => true);
 
     axios.post('/logout', null, {
       headers: {
         'Content-Type': 'application/json',
-        "Authorization": `Bearer ${token}`
+        "Authorization": `Bearer ${userData?.token}`
       }
     })
     .then(() => {
-      localStorage.removeItem('user');
-      dispatch({ type: 'LOGOUT' });
-
       setIsloading(() => false);
+      authDispatch({ type: 'LOGOUT' });
+      cartDispatch({ type: 'DESTROY' });
     })
-    .catch(() => setIsloading(() => false));
+    .catch(() => {
+      setIsloading(() => false);
+      cartDispatch({ type: 'DESTROY' });
+    });
   }
 
   return { logout, isLoading }

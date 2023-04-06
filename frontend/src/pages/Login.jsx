@@ -3,6 +3,7 @@ import Form from '../components/Form';
 import Input from '../components/Input';
 import useLogin from '../hooks/useLogin';
 import useForm from '../hooks/useForm';
+import { useTransition } from 'react-spring';
 
 const Login = () => {
   const { data: credentials, handleChange } = useForm();
@@ -13,30 +14,43 @@ const Login = () => {
     await login(credentials);
   }
 
+  const transition = useTransition(true, {
+    from: {
+      opacity: 0,
+      y: -50
+    },
+    enter: {
+      opacity: 1,
+      y: 0
+    }
+  });
+
   return (
     <div className="Login">
-      <Form
-        title='LOGIN TO YOUR ACCOUNT'
-        accept="log in"
-        acceptRedirect="/login"
-        deny='sign up'
-        denyRedirect="/signup"
-        onSubmit={handleSubmit}
-        errors={errors}
-        isLoading={isLoading}
-      >
-        <Input
-          onChange={handleChange}
-          label='e-mail'
-          name='email'
-        />
-        <Input
-          onChange={handleChange}
-          label='password'
-          type='password'
-          name='password'
-        />
-      </Form>
+      {transition((style, item) => (
+        item && <Form
+          title='LOGIN TO YOUR ACCOUNT'
+          accept="log in"
+          deny='sign up'
+          denyredirect="/signup"
+          onSubmit={handleSubmit}
+          errors={errors}
+          isloading={isLoading}
+          style={style}
+        >
+          <Input
+            onChange={handleChange}
+            label='e-mail'
+            name='email'
+          />
+          <Input
+            onChange={handleChange}
+            label='password'
+            type='password'
+            name='password'
+          />
+        </Form>
+      ))}
     </div>
   );
 }

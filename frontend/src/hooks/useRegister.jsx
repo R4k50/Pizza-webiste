@@ -15,21 +15,31 @@ export default function useRegister() {
     setIsLoading(() => true);
     setErrors(null);
 
-    axios.post('/register', user)
+    axios.post('/register', user, { timeout: 5000 })
       .then(({ data }) => {
-        localStorage.setItem('user', JSON.stringify(data));
         dispatch({ type: 'REGISTER', payload: data });
 
         setIsLoading(() => false);
         navigate('/');
       })
       .catch(({ response }) => {
-        const errors = response.data.errors
-        ? objectToArray(response.data.errors)
-        : [response.data.message];
-
         setIsLoading(() => false);
-        setErrors(errors);
+
+        if (!response) {
+          setErrors(() => ['Network Error']);
+          return;
+        }
+
+        if (response.status === 422) {
+          const errors = response.data.errors
+            ? objectToArray(response.data.errors)
+            : [response.data.message];
+
+          setErrors(errors);
+          return;
+        }
+
+        setErrors(() => [response.statusText]);
       });
   }
 

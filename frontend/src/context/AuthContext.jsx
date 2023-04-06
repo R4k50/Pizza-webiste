@@ -1,15 +1,50 @@
 import { createContext, useReducer, useEffect } from 'react';
 
+
+const login = (payload) => {
+  const newState = {
+    userData: payload
+  };
+
+  localStorage.setItem('user', JSON.stringify(newState));
+  return newState;
+}
+
+const register = (payload) => {
+  const newState = {
+    userData: payload
+  };
+
+  localStorage.setItem('user', JSON.stringify(newState));
+  return newState;
+}
+
+const restore = (payload) => {
+  return payload;
+}
+
+const logout = () => {
+  localStorage.removeItem('user');
+  return { userData: null }
+}
+
+
 export const AuthContext = createContext();
 
 export const authReducer = (state, action) => {
   switch (action.type) {
     case 'LOGIN':
-      return { userData: action.payload }
+      return login(action.payload);
+
     case 'REGISTER':
-      return { userData: action.payload }
+      return register(action.payload);
+
     case 'LOGOUT':
-      return { userData: null }
+      return logout();
+
+    case 'RESTORE':
+      return restore(action.payload);
+
     default:
       return state;
   }
@@ -21,10 +56,10 @@ export const AuthContextProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem('user'));
 
-    if (userData)
-      dispatch({ type: 'LOGIN', payload: userData });
+    if (user)
+      dispatch({ type: 'RESTORE', payload: user });
   }, []);
 
   return (

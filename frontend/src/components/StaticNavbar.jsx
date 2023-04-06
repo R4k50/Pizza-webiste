@@ -20,7 +20,7 @@ const StaticNavbar = forwardRef((props, ref) => {
 
   const handleLogout = () => {
     if (userData)
-      logout(userData.token);
+      logout();
   }
 
   useEffect(() => {
