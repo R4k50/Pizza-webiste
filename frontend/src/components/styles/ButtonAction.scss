@@ -39,9 +39,9 @@
   }
 
   &.Alt {
-    background: none;
+    background: $bg-secondary;
 
-    & > a {
+    & > * {
       color: $accent;
     }
   }
