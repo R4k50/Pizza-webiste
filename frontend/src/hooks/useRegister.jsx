@@ -18,9 +18,12 @@ export default function useRegister() {
     axios.post('/register', user, { timeout: 5000 })
       .then(({ data }) => {
         dispatch({ type: 'REGISTER', payload: data });
+
+        setIsLoading(() => false);
         navigate('/');
       })
       .catch(({ response }) => {
+        setIsLoading(() => false);
 
         if (!response) {
           setErrors(() => ['Network Error']);
@@ -37,8 +40,6 @@ export default function useRegister() {
         }
 
         setErrors(() => [response.statusText]);
-      }).finally(() => {
-        setIsLoading(() => false);
       });
   }
 

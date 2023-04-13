@@ -1,53 +1,53 @@
 import { useEffect, useState } from 'react';
-import useAuthContext from '../hooks/useAuthContext';
 import axios from 'axios';
 
-export default function useFetch(url) {
+export default function useFetch(url, token = null) {
   const [data, setData] = useState(null);
   const [errors, setErrors] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const { userData } = useAuthContext();
 
   const objectToArray = object => Object.values(object).flat();
 
-  const refetch = () => {
-    setIsLoading(() => true);
-    setErrors(null);
+  const refetch = async () => {
+    useEffect(() => {
+      setIsLoading(() => true);
+      setErrors(null);
 
-    const config = userData?.token
-      ? {headers: {
-        'Content-Type': 'application/json',
-        "Authorization": `Bearer ${userData.token}`
-      }} : {};
+      const config = !token
+        ? null
+        : {headers: {
+          'Content-Type': 'application/json',
+          "Authorization": `Bearer ${token}`
+        }};
 
-    axios.get(url, { timeout: 5000, ...config })
-      .then((response) => {
-        setData(() => response.data);
-      })
-      .catch(({ response }) => {
+      axios.get(url, { timeout: 5000, ...config })
+        .then((response) => {
+          setData(() => response.data);
+          setIsLoading(() => false);
+        })
+        .catch(({ response }) => {
+          setIsLoading(() => false);
 
-        if (!response) {
-          setErrors(() => ['Network Error']);
-          return;
-        }
+          if (!response) {
+            setErrors(() => ['Network Error']);
+            return;
+          }
 
-        if (response.status === 422) {
-          const errors = response.data.errors
-            ? objectToArray(response.data.errors)
-            : [response.data.message];
+          if (response.status === 422) {
+            const errors = response.data.errors
+              ? objectToArray(response.data.errors)
+              : [response.data.message];
 
-          setErrors(errors);
-          return;
-        }
+            setErrors(errors);
+            return;
+          }
 
-        setErrors(() => [response.statusText]);
-      })
-      .finally(() => {
-        setIsLoading(() => false);
-      });
+          setErrors(() => [response.statusText]);
+        });
+    }, [url]);
   }
 
-  useEffect(refetch, [url, userData]);
+  refetch();
 
   return { data, isLoading, errors, refetch }
 }
