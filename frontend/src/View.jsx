@@ -1,7 +1,7 @@
-import { BrowserRouter, Routes, Route, Navigate, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ScrollToTop from "./components/ScrollToTop";
-import ProtectedRoute from './components/ProtectedRoute';
-import ProtectedUnverifiedRoute from './components/ProtectedUnverifiedRoute';
+import ProtectedRoute from './components/wrappers/ProtectedRoute';
+import ProtectedUnverifiedRoute from './components/wrappers/ProtectedUnverifiedRoute';
 
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
