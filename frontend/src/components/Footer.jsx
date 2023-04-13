@@ -1,5 +1,5 @@
 import './styles/Footer.scss';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Icon } from '@iconify/react';
 import Socials from './Socials';
 import useAuthContext from '../hooks/useAuthContext';
@@ -16,14 +16,14 @@ const Footer = () => {
       <div className="help">
         <h3>HELP</h3>
         <nav>
-          <Link to='/'>home</Link>
-          <Link to='/menu'>menu</Link>
+          <NavLink to='/'>home</NavLink>
+          <NavLink to='/menu'>menu</NavLink>
           {userData ? <>
-            <Link to='/cart'>cart</Link>
-            <Link to='/orders'>orders</Link>
+            <NavLink to='/cart'>cart</NavLink>
+            <NavLink to='/orders'>orders</NavLink>
           </> : <>
-            <Link to='/register'>sign up</Link>
-            <Link to='/login'>log in</Link>
+            <NavLink to='/register'>sign up</NavLink>
+            <NavLink to='/login'>log in</NavLink>
           </>}
         </nav>
       </div>

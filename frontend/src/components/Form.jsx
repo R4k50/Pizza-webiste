@@ -50,7 +50,7 @@ const Form = forwardRef((props, ref) => {
   });
 
   return (
-    <animated.div {...props} className={`${props.className} Form`} onSubmit={null} title={null} ref={ref}>
+    <animated.div {...props} className={`Form ${props.className || ''}`} onSubmit={null} title={null} ref={ref}>
       <div className="container">
         <h2>{title || 'Form'}</h2>
         <form onSubmit={onSubmit}>

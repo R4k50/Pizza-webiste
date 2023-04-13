@@ -35,7 +35,7 @@ const Login = () => {
           denyredirect="/signup"
           onSubmit={handleSubmit}
           errors={errors}
-          isloading={isLoading}
+          isloading={isLoading ? 1 : 0}
           style={style}
         >
           <Input

@@ -31,7 +31,7 @@ const Cart = () => {
       opacity: 0,
       x: 100
     },
-    delay: 100
+    delay: 300
   });
 
   return (
@@ -48,7 +48,7 @@ const Cart = () => {
           accept='checkout'
           style={style}
           onSubmit={handleSubmit}
-          isloading={isLoading}
+          isloading={isLoading ? 1 : 0}
           errors={errors}
         >
           <h3>DELIVERY DETAILS</h3>

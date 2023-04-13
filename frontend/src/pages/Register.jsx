@@ -35,7 +35,7 @@ const Register = () => {
           denyredirect="/login"
           onSubmit={handleSubmit}
           errors={errors}
-          isloading={isLoading}
+          isloading={isLoading ? 1 : 0}
           style={style}
         >
           <Input onChange={handleChange} errors={errors} name='name' label='name'/>
