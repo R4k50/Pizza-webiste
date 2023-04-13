@@ -18,14 +18,15 @@ export default function useLogout() {
       }
     })
     .then(() => {
-      setIsloading(() => false);
       authDispatch({ type: 'LOGOUT' });
       cartDispatch({ type: 'DESTROY' });
     })
     .catch(() => {
-      setIsloading(() => false);
       cartDispatch({ type: 'DESTROY' });
-    });
+    })
+    .finally(() => {
+      setIsLoading(() => false);
+    });;
   }
 
   return { logout, isLoading }

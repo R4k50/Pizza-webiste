@@ -18,14 +18,9 @@ export default function useLogin() {
     axios.post('/login', credentials, { timeout: 5000 })
       .then(({ data }) => {
         dispatch({ type: 'LOGIN', payload: data });
-
-        setIsLoading(() => false);
         navigate('/');
       })
-      .catch(({ response }) => {
-        setIsLoading(() => false);
-
-        if (!response) {
+      .catch(({ response }) => {if (!response) {
           setErrors(() => ['Network Error']);
           return;
         }
@@ -40,6 +35,9 @@ export default function useLogin() {
         }
 
         setErrors(() => [response.statusText]);
+      })
+      .finally(() => {
+        setIsLoading(() => false);
       });
   }
 
