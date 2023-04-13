@@ -1,8 +1,60 @@
 import './styles/Orders.scss';
+import { useTrail, animated } from 'react-spring';
+import useFetch from '../hooks/useFetch';
+import { Icon } from '@iconify/react';
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import { useEffect } from 'react';
 
 const Orders = () => {
+  const { data: orders, isLoading, errors, refetch } = useFetch('/my-orders');
+
+  const timeToNow = date => formatDistanceToNow(new Date(date), { addSuffix: true });
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch();
+    }, 600);
+
+    return () => clearInterval(interval);
+  }, [refetch]);
+
+  const trails = useTrail((orders ? orders.length : 0), {
+    from: {
+      opacity: 0,
+      scale: .9,
+      y: 50
+    },
+    to: {
+      opacity: 1,
+      scale: 1,
+      y: 0
+    },
+    delay: 100
+  });
+
   return (
-    <div className="Orders">Orders</div>
+    <div className="Orders">
+      <h2>ORDERS</h2>
+      <div className="container">
+        {isLoading && <Icon icon='eos-icons:bubble-loading' />}
+        {orders && trails.map((props, i) => (
+          <animated.div className='order' style={props} key={i}>
+            <div className='header'>
+              <p className='address'>{orders[i].address}</p>
+              <p className='time'>{timeToNow(orders[i].created_at)}</p>
+            </div>
+            <p className='city'><span>{orders[i].city},</span> {orders[i].postal_code}</p>
+            <p style={{
+              color: orders[i].delivery_man_id ? '#699BF7' : '#E56464'
+            }}>
+              {orders[i].delivery_man_id ? 'ON THE WAY' : 'PREPARING'}
+            </p>
+            <p className='id'>Order id: {orders[i].id}</p>
+          </animated.div>
+        ))}
+        {errors && !orders && <div className="errors">{errors}</div>}
+      </div>
+    </div>
   );
 }
 
