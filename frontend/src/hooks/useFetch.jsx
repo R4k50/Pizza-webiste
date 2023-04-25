@@ -14,15 +14,16 @@ export default function useFetch(url) {
     setIsLoading(() => true);
     setErrors(null);
 
-    const config = userData?.token
-      ? {headers: {
+    axios.get(url, {
+      headers: {
         'Content-Type': 'application/json',
-        "Authorization": `Bearer ${userData.token}`
-      }} : {};
-
-    axios.get(url, { timeout: 5000, ...config })
+        "Authorization": `Bearer ${userData?.token}`
+      },
+      timeout: 5000
+    })
       .then((response) => {
         setData(() => response.data);
+        console.log(response);
       })
       .catch(({ response }) => {
 

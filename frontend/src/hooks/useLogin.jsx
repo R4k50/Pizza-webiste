@@ -20,7 +20,8 @@ export default function useLogin() {
         dispatch({ type: 'LOGIN', payload: data });
         navigate('/');
       })
-      .catch(({ response }) => {if (!response) {
+      .catch(({ response }) => {
+        if (!response) {
           setErrors(() => ['Network Error']);
           return;
         }

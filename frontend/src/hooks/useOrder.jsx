@@ -26,12 +26,10 @@ export default function useOrder() {
       timeout: 5000
     })
       .then(() => {
-        setIsLoading(() => false);
         cartDispatch({ type: 'DESTROY' });
         navigate('/orders');
       })
       .catch(({ response }) => {
-        setIsLoading(() => false);
 
         if (!response) {
           setErrors(() => ['Network Error']);
@@ -48,6 +46,9 @@ export default function useOrder() {
           : [response.data.message];
 
         setErrors(errors);
+      })
+      .finally(() => {
+        setIsLoading(() => false);
       });
   }
 

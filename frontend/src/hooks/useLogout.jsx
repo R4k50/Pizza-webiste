@@ -4,12 +4,12 @@ import useCartContext from './useCartContext';
 import axios from 'axios';
 
 export default function useLogout() {
-  const [isLoading, setIsloading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const { userData, dispatch: authDispatch } = useAuthContext();
   const { dispatch: cartDispatch } = useCartContext();
 
   const logout = async () => {
-    setIsloading(() => true);
+    setIsLoading(() => true);
 
     axios.post('/logout', null, {
       headers: {
@@ -26,7 +26,7 @@ export default function useLogout() {
     })
     .finally(() => {
       setIsLoading(() => false);
-    });;
+    });
   }
 
   return { logout, isLoading }
