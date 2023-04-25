@@ -13,10 +13,9 @@ class ProductController extends Controller
         return Product::all();
     }
 
-    public function getOne($id)
+    function getOne($id)
     {
-        $product = Product::find($id);
-        return response(compact('product'));
+        return Product::find($id);
     }
 
     public function create(ProductRequest $request)
@@ -33,17 +32,17 @@ class ProductController extends Controller
         return response(compact('product'));
     }
 
-    public function update(ProductRequest $request, $id)
+    public function update(Request $request, $id)
     {
-        $fields = $request->validated();
+        $fields = $request->validate([
+            'name' => 'sometimes|required|string',
+            'ingredients' => 'sometimes|required|string',
+            'price' => 'sometimes|required|numeric|between:0,99.99',
+            'img' => 'sometimes|required|string',
+        ]);
 
         $product = Product::find($id);
-        $product->update([
-            'name' => $fields['name'],
-            'ingredients' => $fields['ingredients'],
-            'price' => $fields['price'],
-            'img' => $fields['img'],
-        ]);
+        $product->update($request->all());
 
         return response(compact('product'));
     }

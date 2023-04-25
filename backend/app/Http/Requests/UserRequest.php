@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
 
-class RegisterRequest extends FormRequest
+class UserRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -18,6 +18,8 @@ class RegisterRequest extends FormRequest
             'name' => 'required|alpha',
             'surname' => 'required|alpha',
             'email' => 'required|email|unique:users,email',
+            'isAdmin' => 'sometimes|boolean',
+            'isDeliveryMan' => 'sometimes|boolean',
             'password' => [
                 'required',
                 'confirmed',

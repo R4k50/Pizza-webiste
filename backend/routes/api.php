@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +21,7 @@ Route::group(['middleware' => ['auth:sanctum']], function()
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::post('/order', [OrderController::class, 'create']);
+    Route::get('/my-orders', [OrderController::class, 'getOwned']);
 
     Route::middleware('can:manage-products')->group(function()
     {
@@ -28,11 +30,28 @@ Route::group(['middleware' => ['auth:sanctum']], function()
         Route::delete('/product/{id}', [ProductController::class, 'delete']);
     });
 
-    Route::middleware('can:manage-orders')->group(function()
+    Route::middleware('can:manage-delivery')->group(function()
     {
-        Route::get('/orders', [OrderController::class, 'getAll']);
+        Route::get('/unassigned-orders', [OrderController::class, 'getUnassigned']);
         Route::get('/assigned-orders', [OrderController::class, 'getAllAssigned']);
         Route::patch('/order/{id}/assign', [OrderController::class, 'assign']);
         Route::delete('/assigned-order/{id}', [OrderController::class, 'deleteAssigned']);
+    });
+
+    Route::middleware('can:manage-orders')->group(function()
+    {
+        Route::get('/orders', [OrderController::class, 'getAll']);
+        Route::get('/order/{id}', [OrderController::class, 'getOne']);
+        Route::patch('/order/{id}', [OrderController::class, 'update']);
+        Route::delete('/order/{id}', [OrderController::class, 'delete']);
+    });
+
+    Route::middleware('can:manage-users')->group(function()
+    {
+        Route::post('/user', [UserController::class, 'create']);
+        Route::get('/users', [UserController::class, 'getAll']);
+        Route::get('/user/{id}', [UserController::class, 'getOne']);
+        Route::patch('/user/{id}', [UserController::class, 'update']);
+        Route::delete('/user/{id}', [UserController::class, 'delete']);
     });
 });

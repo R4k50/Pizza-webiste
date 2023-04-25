@@ -17,13 +17,13 @@ class User extends Authenticatable
         'surname',
         'email',
         'password',
+        'isAdmin',
+        'isDeliveryMan'
     ];
 
     protected $hidden = [
         'password',
         'remember_token',
-        'isAdmin',
-        'isDeliveryMan',
         'created_at',
         'updated_at',
         'email_verified_at',
