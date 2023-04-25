@@ -83,7 +83,11 @@
 
     &.Alt {
       min-width: 2rem;
-      margin-left: 5.5rem;
+      margin-left: 6.6rem;
+
+      @include desktop {
+        margin-left: 5.5rem;
+      }
     }
   }
 }
