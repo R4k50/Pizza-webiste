@@ -13,12 +13,20 @@ const Input = forwardRef((props, ref) => {
 
   const id = useId();
   const inputRef = useRef();
+  const labelRef = useRef();
   const [isFocused, setIsFocused] = useState(false);
   const [value, setValue] = useState(props?.value ?? '');
 
   useEffect(() => {
     ref = inputRef;
   }, [inputRef]);
+
+  useEffect(() => {
+    setValue(props?.value ?? '');
+
+    if (props?.value)
+      setIsFocused(() => true);
+  }, [props.value]);
 
   const handler = (handlerProp, handlerEvent, event) => {
     handlerEvent(event);
@@ -88,11 +96,11 @@ const Input = forwardRef((props, ref) => {
 
   return (
     <div className="Input">
-      <animated.label htmlFor={`${label}_id`} style={labelAnimation} onClick={handleClick}>
+      <animated.label htmlFor={`${label}_id`} style={labelAnimation} onClick={handleClick} ref={labelRef}>
         {label}
       </animated.label>
       <animated.div className="label-bg" style={bgAnimation} onClick={handleClick}>
-        {label}
+        <span>{label}</span>
       </animated.div>
       <animated.input
         {...props}
@@ -107,9 +115,6 @@ const Input = forwardRef((props, ref) => {
       />
     </div>
   );
-}
-);
-
-
+});
 
 export default Input;

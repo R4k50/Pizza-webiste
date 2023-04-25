@@ -22,10 +22,10 @@
     padding: 0 .20rem;
     background: $bg-secondary;
     color: transparent;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    cursor: text;
+
+    span {
+      visibility: hidden;
+    }
   }
 
   input {
