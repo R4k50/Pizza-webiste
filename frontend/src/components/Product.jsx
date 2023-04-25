@@ -33,8 +33,7 @@ const Product = forwardRef((props, ref) => {
         </div>
         <div className="container">
           <p>{product.ingredients}</p>
-          {cartProducts && cartProducts
-            .filter(({ id }) => (id === product.id))
+          {cartProducts?.filter(({ id }) => (id === product.id))
             .map(({ id, quantity }) => (
               <span key={id}><Icon icon='ic:outline-shopping-bag'/>{quantity}</span>
             ))
@@ -42,8 +41,7 @@ const Product = forwardRef((props, ref) => {
         </div>
       </div>
       {userData && <ButtonAction onClick={() => handleAdd(product.id)}>add to cart</ButtonAction>}
-      {cartProducts && cartProducts
-        .filter(({ id }) => (id === product.id))
+      {cartProducts?.filter(({ id }) => (id === product.id))
         .map(() => (
           <ButtonAction
             onClick={() => handleRemove(product.id)}

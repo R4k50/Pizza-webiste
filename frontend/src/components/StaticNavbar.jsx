@@ -1,6 +1,6 @@
 import './styles/StaticNavbar.scss';
 import { useRef, useState, useEffect, forwardRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import Hamburger from './Hamburger';
 import FloatingMenu from './FloatingMenu';
 import ButtonAction from './ButtonAction';
@@ -36,10 +36,12 @@ const StaticNavbar = forwardRef((props, ref) => {
 
   const Links = () => <>
     <div className="pages">
-      <Link to="/" className='link'>home</Link>
-      <Link to="/menu" className='link'>menu</Link>
-      {userData && <Link to="/cart" className='link'>cart</Link> }
-      {userData && <Link to="/orders" className='link'>orders</Link> }
+      <NavLink to="/" className='link'>home</NavLink>
+      <NavLink to="/menu" className='link'>menu</NavLink>
+      { userData && <NavLink to="/cart" className='link'>cart</NavLink> }
+      { userData && <NavLink to="/orders" className='link'>orders</NavLink> }
+      { userData?.user.isDeliveryMan == true && <NavLink to="/delivery" className='link'>delivery</NavLink> }
+      { userData?.user.isAdmin == true && <NavLink to="/admin/dashboard" className='link'>admin</NavLink> }
     </div>
     <div className="auth">
       {!userData && <ButtonAction
@@ -48,7 +50,7 @@ const StaticNavbar = forwardRef((props, ref) => {
         onClick={() => setIsMenuVisible(() => false)}
       >sign up</ButtonAction>}
       {userData
-        ? <ButtonAction onClick={handleLogout} disabled={isLoading}>log out</ButtonAction>
+        ? <ButtonAction to="/" onClick={handleLogout} disabled={isLoading}>log out</ButtonAction>
         : <ButtonAction to="/login" onClick={() => setIsMenuVisible(() => false)}>log in</ButtonAction>
       }
     </div>
