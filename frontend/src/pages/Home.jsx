@@ -7,6 +7,7 @@ import pizza2 from '../images/Pizza2.png';
 import pizza3 from '../images/Pizza3.png';
 import pizza4 from '../images/Pizza4.png';
 import useAuthContext from '../hooks/useAuthContext';
+import { animated, useTransition } from 'react-spring';
 
 const Home = () => {
   const { userData } = useAuthContext();
@@ -28,7 +29,37 @@ const Home = () => {
       icon: "fluent:food-pizza-24-regular",
       title: "Order received"
     },
+  ];
+
+  const images = [
+    {
+      src: pizza1,
+      className: 'pizza'
+    },
+    {
+      src: pizza2,
+      className: 'pizza secondary'
+    }
   ]
+
+  const transition = useTransition(images, {
+    from: {
+      opacity: 1,
+      translateX: '35rem',
+      rotate: '180deg'
+    },
+    enter: {
+      opacity: 1,
+      translateX: '0rem',
+      rotate: '0deg'
+    },
+    trail: 200,
+    delay: 100,
+    config: {
+      duration: 500
+    }
+  });
+
 
   return (
     <>
@@ -42,8 +73,9 @@ const Home = () => {
             <ButtonAction to='/menu'>place an order<Icon icon="material-symbols:arrow-forward-ios-rounded" /></ButtonAction>
             <ButtonAction to={userData ? '/orders' : '/login'} appearance='alt'>track your order<Icon icon="ph:magnifying-glass-bold" /></ButtonAction>
           </div>
-          <img src={pizza1} className='pizza' alt="pizza" />
-          <img src={pizza2} className='pizza secondary' alt="pizza" />
+          {transition((style, image, key) => (
+            image && <animated.img style={style} src={image.src} className={image.className} key={key} alt="pizza" />
+          ))}
           <Socials />
         </section>
         <section className="service">
