@@ -1,5 +1,5 @@
 import './styles/Orders.scss';
-import { useTrail, animated } from 'react-spring';
+import { useTrail, useTransition, animated } from 'react-spring';
 import useFetch from '../hooks/useFetch';
 import { Icon } from '@iconify/react';
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
@@ -13,7 +13,7 @@ const Orders = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       refetch();
-    }, 600);
+    }, 60000);
 
     return () => clearInterval(interval);
   }, [refetch]);
@@ -30,6 +30,20 @@ const Orders = () => {
       y: 0
     },
     delay: 100
+  });
+
+  const transition = useTransition(orders?.length == 0, {
+    from: {
+      opacity: 0,
+      scale: .8,
+      y: 50
+    },
+    enter: {
+      opacity: 1,
+      scale: 1,
+      y: 0
+    },
+    delay: 200
   });
 
   return (
@@ -50,6 +64,12 @@ const Orders = () => {
               {orders[i].delivery_man_id ? 'ON THE WAY' : 'PREPARING'}
             </p>
             <p className='id'>Order id: {orders[i].id}</p>
+          </animated.div>
+        ))}
+        {transition((style, item) => (
+          item && <animated.div className='empty' style={style}>
+            <Icon icon='system-uicons:box-open'/>
+            <h3>You don't have any orders...</h3>
           </animated.div>
         ))}
         {errors && !orders && <div className="errors">{errors}</div>}
