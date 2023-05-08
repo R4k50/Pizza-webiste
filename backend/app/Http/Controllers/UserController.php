@@ -22,6 +22,10 @@ class UserController extends Controller
     public function create(UserRequest $request)
     {
         $fields = $request->validated();
+
+        if (array_key_exists('password', $fields))
+            $fields['password'] = bcrypt($fields['password']);
+
         $user = User::create($fields);
 
         return response(compact('user'));
