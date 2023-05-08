@@ -23,7 +23,6 @@ export default function useFetch(url) {
     })
       .then((response) => {
         setData(() => response.data);
-        console.log(response);
       })
       .catch(({ response }) => {
 
